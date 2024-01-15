@@ -28,13 +28,15 @@ public class MemoryHamsterGame extends SimpleHamsterGame {
 	@Override
 	protected void run() {
 		// Comment any operation call out, to run the others on their own.
-		this.inOrder();
+		//this.inOrder();
 		this.reverseOrder();
-		this.sort();
+		//this.sort();
 
 		// TODO Add code for homework exercise 3 (d) here
 	}
-
+	//Location initialPoint = paule.getLocation();
+	Direction initialDir = paule.getDirection();
+	LinkedList<Integer> cornsIndex = new LinkedList<>();
 	/**
 	 * TODO add documentation here.
 	 */
@@ -42,10 +44,42 @@ public class MemoryHamsterGame extends SimpleHamsterGame {
 		// TODO implement homework exercise 1 (b)
 		Location initialPoint = paule.getLocation();
 		Direction initialDir = paule.getDirection();
-		Queue<Location> cornsIndex = new LinkedList<>();
-		
+		LinkedList<Integer> cornsIndex = new LinkedList<>();
+		if (paule.getDirection() == initialDir) {
+			while (paule.frontIsClear()) {
+				int cornAmount = 0;
+				while (paule.grainAvailable()) {
+					paule.pickGrain();
+					cornAmount++;
+				}
+				cornsIndex.addLast(cornAmount);
+				paule.move();
+			}
+			while (!paule.frontIsClear()) {
+				int cornAmount = 0;
+				while (paule.grainAvailable()) {
+					paule.pickGrain();
+					cornAmount++;
+				}
+				cornsIndex.addLast(cornAmount);
+				paule.turnLeft();
+				paule.turnLeft();
+			}
+		}
+		if (paule.getDirection()!=initialDir) {
+			for (int i = 0; i < cornsIndex.size(); i++) {
+				if (cornsIndex.get(i) >0) {
+					//int cornsToPut = cornsIndex.get(i);
+					for (int cornsToPut = cornsIndex.get(i); cornsToPut>0; cornsToPut--) {
+						paule.putGrain();
+					}
+					if (i!=cornsIndex.size()-1) {paule.move();}
+				} else if (i!=cornsIndex.size()-1) {paule.move();}
+			}
+			paule.turnLeft();
+			paule.turnLeft();
+		}
 	}
-
 	/**
 	 * TODO add documentation here.
 	 */
