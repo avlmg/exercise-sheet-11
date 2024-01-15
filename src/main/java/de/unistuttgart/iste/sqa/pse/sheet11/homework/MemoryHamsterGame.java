@@ -5,6 +5,8 @@ import de.hamstersimulator.objectsfirst.datatypes.Location;
 import de.hamstersimulator.objectsfirst.external.simple.game.SimpleHamsterGame;
 
 import java.time.LocalDate;
+import java.util.LinkedList;
+import java.util.Queue;
 
 // @Amores Schneyinck
 
@@ -40,6 +42,7 @@ public class MemoryHamsterGame extends SimpleHamsterGame {
 		// TODO implement homework exercise 1 (b)
 		Location initialPoint = paule.getLocation();
 		Direction initialDir = paule.getDirection();
+		Queue<Location> cornsIndex = new LinkedList<>();
 		
 	}
 
