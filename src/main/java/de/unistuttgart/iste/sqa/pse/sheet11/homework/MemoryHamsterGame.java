@@ -1,6 +1,10 @@
 package de.unistuttgart.iste.sqa.pse.sheet11.homework;
 
+import de.hamstersimulator.objectsfirst.datatypes.Direction;
+import de.hamstersimulator.objectsfirst.datatypes.Location;
 import de.hamstersimulator.objectsfirst.external.simple.game.SimpleHamsterGame;
+
+import java.time.LocalDate;
 
 // @Amores Schneyinck
 
@@ -34,6 +38,9 @@ public class MemoryHamsterGame extends SimpleHamsterGame {
 	 */
 	private void reverseOrder() {
 		// TODO implement homework exercise 1 (b)
+		Location initialPoint = paule.getLocation();
+		Direction initialDir = paule.getDirection();
+		
 	}
 
 	/**
