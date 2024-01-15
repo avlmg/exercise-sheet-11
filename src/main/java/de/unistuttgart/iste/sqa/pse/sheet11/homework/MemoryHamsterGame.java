@@ -7,6 +7,7 @@ import de.hamstersimulator.objectsfirst.external.simple.game.SimpleHamsterGame;
 import java.time.LocalDate;
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.Stack;
 
 // @Amores Schneyinck
 
@@ -36,7 +37,8 @@ public class MemoryHamsterGame extends SimpleHamsterGame {
 	}
 
 	/**
-	 * TODO add documentation here.
+	 * Paule moves forwards, collects grains on his way in a queue and places
+	 * them in reverse order after he has hit a wall, finishing at the initial stand.
 	 */
 	private void reverseOrder() {
 		// TODO implement homework exercise 1 (b)
@@ -83,6 +85,43 @@ public class MemoryHamsterGame extends SimpleHamsterGame {
 	 */
 	private void inOrder() {
 		// TODO implement homework exercise 2 (b)
+		Direction initialDir = paule.getDirection();
+		Stack<Integer> cornsStack = new Stack<>();
+		// CHANGE TO STACK THE FOLLOWING
+		if (paule.getDirection() == initialDir) {
+			while (paule.frontIsClear()) {
+				int cornAmount = 0;
+				while (paule.grainAvailable()) {
+					paule.pickGrain();
+					cornAmount++;
+				}
+				cornsIndex.addLast(cornAmount);
+				paule.move();
+			}
+			while (!paule.frontIsClear()) {
+				int cornAmount = 0;
+				while (paule.grainAvailable()) {
+					paule.pickGrain();
+					cornAmount++;
+				}
+				cornsIndex.addLast(cornAmount);
+				paule.turnLeft();
+				paule.turnLeft();
+			}
+		}
+		if (paule.getDirection() != initialDir) {
+			for (int i = 0; i < cornsIndex.size(); i++) {
+				if (cornsIndex.get(i) >0) {
+					//int cornsToPut = cornsIndex.get(i);
+					for (int cornsToPut = cornsIndex.get(i); cornsToPut>0; cornsToPut--) {
+						paule.putGrain();
+					}
+					if (i!=cornsIndex.size()-1) {paule.move();}
+				} else if (i!=cornsIndex.size()-1) {paule.move();}
+			}
+			paule.turnLeft();
+			paule.turnLeft();
+		}
 	}
 
 	/**
