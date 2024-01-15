@@ -34,15 +34,13 @@ public class MemoryHamsterGame extends SimpleHamsterGame {
 
 		// TODO Add code for homework exercise 3 (d) here
 	}
-	//Location initialPoint = paule.getLocation();
-	Direction initialDir = paule.getDirection();
-	LinkedList<Integer> cornsIndex = new LinkedList<>();
+
 	/**
 	 * TODO add documentation here.
 	 */
 	private void reverseOrder() {
 		// TODO implement homework exercise 1 (b)
-		Location initialPoint = paule.getLocation();
+		//Location initialPoint = paule.getLocation();
 		Direction initialDir = paule.getDirection();
 		LinkedList<Integer> cornsIndex = new LinkedList<>();
 		if (paule.getDirection() == initialDir) {
@@ -66,7 +64,7 @@ public class MemoryHamsterGame extends SimpleHamsterGame {
 				paule.turnLeft();
 			}
 		}
-		if (paule.getDirection()!=initialDir) {
+		if (paule.getDirection() != initialDir) {
 			for (int i = 0; i < cornsIndex.size(); i++) {
 				if (cornsIndex.get(i) >0) {
 					//int cornsToPut = cornsIndex.get(i);
