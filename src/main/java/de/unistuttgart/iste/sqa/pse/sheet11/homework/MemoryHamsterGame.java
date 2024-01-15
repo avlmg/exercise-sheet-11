@@ -2,6 +2,8 @@ package de.unistuttgart.iste.sqa.pse.sheet11.homework;
 
 import de.hamstersimulator.objectsfirst.external.simple.game.SimpleHamsterGame;
 
+// @Amores Schneyinck
+
 /**
  * Class to implement homework exercises 1, 2 and 3 of sheet 11.
  */
