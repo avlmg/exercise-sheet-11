@@ -29,8 +29,8 @@ public class MemoryHamsterGame extends SimpleHamsterGame {
 	@Override
 	protected void run() {
 		// Comment any operation call out, to run the others on their own.
-		//this.inOrder();
-		this.reverseOrder();
+		this.inOrder();
+		//this.reverseOrder();
 		//this.sort();
 
 		// TODO Add code for homework exercise 3 (d) here
@@ -95,29 +95,44 @@ public class MemoryHamsterGame extends SimpleHamsterGame {
 					paule.pickGrain();
 					cornAmount++;
 				}
-				cornsIndex.addLast(cornAmount);
+				cornsStack.add(cornAmount);
+				//cornsIndex.addLast(cornAmount);
 				paule.move();
 			}
+			System.out.println((cornsStack));
 			while (!paule.frontIsClear()) {
 				int cornAmount = 0;
 				while (paule.grainAvailable()) {
 					paule.pickGrain();
 					cornAmount++;
 				}
-				cornsIndex.addLast(cornAmount);
+				cornsStack.add(cornAmount);
+				//cornsIndex.addLast(cornAmount);
 				paule.turnLeft();
 				paule.turnLeft();
+				System.out.println(cornsStack);
 			}
 		}
 		if (paule.getDirection() != initialDir) {
-			for (int i = 0; i < cornsIndex.size(); i++) {
-				if (cornsIndex.get(i) >0) {
+			//for (int i = 0; i < cornsStack.size(); i++) {
+			while (!cornsStack.isEmpty()) {
+				if (cornsStack.lastElement() >0) {
 					//int cornsToPut = cornsIndex.get(i);
-					for (int cornsToPut = cornsIndex.get(i); cornsToPut>0; cornsToPut--) {
+					for (int cornsToPut = cornsStack.lastElement(); cornsToPut>0; cornsToPut--) {
 						paule.putGrain();
 					}
-					if (i!=cornsIndex.size()-1) {paule.move();}
-				} else if (i!=cornsIndex.size()-1) {paule.move();}
+					cornsStack.pop();
+					if (cornsStack.size()>0) {paule.move();}
+
+					System.out.println(cornsStack);
+				} else if (cornsStack.lastElement() == 0) {
+					cornsStack.pop();
+					if (cornsStack.size()>0) {paule.move();}
+				}
+				else if (!cornsStack.isEmpty()) {
+					//paule.move();
+					System.out.println(cornsStack);
+				}
 			}
 			paule.turnLeft();
 			paule.turnLeft();
