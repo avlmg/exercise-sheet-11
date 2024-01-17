@@ -9,7 +9,7 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Stack;
 
-// @Amores Schneyinck
+// @AmoresSchneyinck
 
 /**
  * Class to implement homework exercises 1, 2 and 3 of sheet 11.
@@ -41,7 +41,6 @@ public class MemoryHamsterGame extends SimpleHamsterGame {
 	 * them in reverse order after he has hit a wall, finishing at the initial stand.
 	 */
 	private void reverseOrder() {
-		// TODO implement homework exercise 1 (b)
 		//Location initialPoint = paule.getLocation();
 		Direction initialDir = paule.getDirection();
 		LinkedList<Integer> cornsIndex = new LinkedList<>();
