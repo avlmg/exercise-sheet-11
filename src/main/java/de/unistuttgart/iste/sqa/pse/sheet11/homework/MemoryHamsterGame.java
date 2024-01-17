@@ -8,6 +8,9 @@ import java.time.LocalDate;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Stack;
+import java.util.PriorityQueue;
+import java.util.Comparator;
+
 
 // @AmoresSchneyinck
 
@@ -83,7 +86,6 @@ public class MemoryHamsterGame extends SimpleHamsterGame {
 	 * TODO add documentation here.
 	 */
 	private void inOrder() {
-		// TODO implement homework exercise 2 (b)
 		Direction initialDir = paule.getDirection();
 		Stack<Integer> cornsStack = new Stack<>();
 		// CHANGE TO STACK THE FOLLOWING
@@ -121,12 +123,12 @@ public class MemoryHamsterGame extends SimpleHamsterGame {
 						paule.putGrain();
 					}
 					cornsStack.pop();
-					if (cornsStack.size()>0) {paule.move();}
+					if (!cornsStack.isEmpty()) {paule.move();}
 
 					System.out.println(cornsStack);
 				} else if (cornsStack.lastElement() == 0) {
 					cornsStack.pop();
-					if (cornsStack.size()>0) {paule.move();}
+					if (!cornsStack.isEmpty()) {paule.move();}
 				}
 				else if (!cornsStack.isEmpty()) {
 					//paule.move();
@@ -139,13 +141,104 @@ public class MemoryHamsterGame extends SimpleHamsterGame {
 	}
 
 	/**
-	 * TODO add documentation here.
+	 * Sorts the grains collected by Paule in ascending order and deposits them while returning to the starting field.
+	 * Paule moves forward, collects grains, and places them in a PriorityQueue to maintain ascending order.
+	 * Upon reaching a wall, Paule deposits the grains in ascending order while returning to the initial stand.
 	 */
 	private void sort() {
-		// TODO implement homework exercise 3 (b)
+		Direction initialDir = paule.getDirection();
+		PriorityQueue<Integer> cornsQueue = new PriorityQueue<>();
+
+		if (paule.getDirection() == initialDir) {
+			while (paule.frontIsClear()) {
+				int cornAmount = 0;
+				while (paule.grainAvailable()) {
+					paule.pickGrain();
+					cornAmount++;
+				}
+				cornsQueue.add(cornAmount);
+				paule.move();
+			}
+
+			while (!paule.frontIsClear()) {
+				int cornAmount = 0;
+				while (paule.grainAvailable()) {
+					paule.pickGrain();
+					cornAmount++;
+				}
+				cornsQueue.add(cornAmount);
+				paule.turnLeft();
+				paule.turnLeft();
+			}
+		}
+
+		if (paule.getDirection() != initialDir) {
+			while (!cornsQueue.isEmpty()) {
+				int cornsToPut = cornsQueue.poll();
+				for (int i = 0; i < cornsToPut; i++) {
+					paule.putGrain();
+				}
+				if (!cornsQueue.isEmpty()) {
+					paule.move();
+				}
+			}
+			paule.turnLeft();
+			paule.turnLeft();
+		}
 	}
 
-	// TODO Add Operation for homework exercise 3 (c) here
+	/**
+	 * Sorts the grains collected by Paule in the specified order defined by the provided comparator and deposits them
+	 * while returning to the starting field.
+	 * Paule moves forward, collects grains, and places them in a PriorityQueue using the provided comparator.
+	 * Upon reaching a wall, Paule deposits the grains in the specified order while returning to the initial stand.
+	 *
+	 * @param comparator The comparator defining the order in which Paule should sort the grains.
+	 */
+	private void sort(Comparator<Integer> comparator) {
+		Direction initialDir = paule.getDirection();
+		PriorityQueue<Integer> cornsQueue = new PriorityQueue<>(comparator);
+
+		// Collect grains while moving forward
+		if (paule.getDirection() == initialDir) {
+			while (paule.frontIsClear()) {
+				int cornAmount = 0;
+				while (paule.grainAvailable()) {
+					paule.pickGrain();
+					cornAmount++;
+				}
+				cornsQueue.add(cornAmount);
+				paule.move();
+			}
+
+			// Turn around after hitting a wall
+			while (!paule.frontIsClear()) {
+				int cornAmount = 0;
+				while (paule.grainAvailable()) {
+					paule.pickGrain();
+					cornAmount++;
+				}
+				cornsQueue.add(cornAmount);
+				paule.turnLeft();
+				paule.turnLeft();
+			}
+		}
+
+		// Deposit grains in the specified order while returning
+		if (paule.getDirection() != initialDir) {
+			while (!cornsQueue.isEmpty()) {
+				int cornsToPut = cornsQueue.poll();
+				for (int i = 0; i < cornsToPut; i++) {
+					paule.putGrain();
+				}
+				if (!cornsQueue.isEmpty()) {
+					paule.move();
+				}
+			}
+			paule.turnLeft();
+			paule.turnLeft();
+		}
+	}
 
 	// TODO Add required helper operations here
 }
