@@ -6,7 +6,7 @@ import java.util.Map;
 /**
  * Provides a Tournament Server with the functionality to create sports tournaments.
  *
- * @author andrevanhoorn
+ * @author andarevanhoorn
  *
  */
 public class TTServer {

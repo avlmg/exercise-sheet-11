@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Random;
+
 
 /**
  * Represents a sports tournament with a set of teams and a list of games between the teams.
@@ -54,9 +56,11 @@ public class Tournament {
 	 *
 	 * Note that multiple games between the same team are possible.
 	 *
-	 * @param homeTeam the home team
-	 * @param vistingTeam the visiting team
+	 * @param homeTeam      the home team, must be a registered team in the tournament and not null
+	 * @param vistingTeam  the visiting team, must be a registered team in the tournament and not null
 	 * @return the game between the two teams
+	 * @throws IllegalArgumentException if homeTeam or visitingTeam is null or not registered in the tournament,
+	 *                                  or if both teams are the same, or if the maximum allowed number of games per team is reached
 	 */
 	public Game createGame(final Team homeTeam, final Team vistingTeam) {
 		final Game newGame = new Game(homeTeam, vistingTeam);
@@ -91,7 +95,37 @@ public class Tournament {
 		return new ArrayList<Team>(this.teams.values());
 	}
 
-	// TODO add operations for presence exercise 1 (c) and (d) here.
+	/**
+	 * Automatically creates games for "Everyone against everyone" mode.
+	 */
+	public void createGamePlan() {
+		List<Team> teamList = new ArrayList<>(this.teams.values());
+
+		// Iterate over all unique pairs of teams to create games.
+		for (int i = 0; i < teamList.size(); i++) {
+			Team homeTeam = teamList.get(i);
+
+			for (int j = i + 1; j < teamList.size(); j++) {
+				Team visitingTeam = teamList.get(j);
+				createGame(homeTeam, visitingTeam);
+			}
+		}
+	}
+
+	/**
+	 * Generates random game results for all games in the tournament.
+	 * Assumes the maximum number of goals per team is 5.
+	 */
+	public void generateGameResults() {
+		Random random = new Random();
+
+		for (Game game : games) {
+			int scoreHome = random.nextInt(6); // Assuming scores range from 0 to 5.
+			int scoreVisiting = random.nextInt(6);
+
+			game.storeResult(scoreHome, scoreVisiting);
+		}
+	}
 
 	@Override
 	public int hashCode() {
